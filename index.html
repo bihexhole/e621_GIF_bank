@@ -1,35 +1,53 @@
+<html>
 <head>
+	<meta charset="UTF-8">
 	<script type="text/javascript">
-		var user_name = "bigblack1999";
-		var links = ["https://static1.e621.net/data/89/78/897890e042db78ba9ab5e32458fe2dbc.gif"];
-		var i;
-		
-		function My_request(url, action) {
-			if (action != "GET" && action != "POST") {
-				alert("action != GET / POST!");
-				return null;
-			}
-			
-			var Http = new XMLHttpRequest();
-			Http.open(action, url);
-			Http.onreadystatechange = (e) => {
-				;
-			}
-			//Http.setRequestHeader("Access-Control-Allow-Origin", "*");
-			Http.send();
-			return Http;
-		}
-		
-
-		
-		for (i = 0; i < links.length; i++) {
+		function GenImg(src) {
 			var img = document.createElement("img");
-			//alert(links[i]);
+			img.setAttribute("src", src);
+			return img;
 		}
 		
-		My_request("https://e621.net/user/index.json?name=bigblack1999", "GET");
+		function Read_my_src() {
+			var input_files = document.getElementById("my_src").files;
+			if (input_files.length < 1) {
+				alert("請先選取檔案");
+				return;
+			}
+			var fr = new FileReader();
+			fr.readAsText(input_files[0]);
+			fr.onload = function() {
+				alert(fr);
+				var links = fr.result.split("\n");
+				var div = document.getElementById("img-div");
+				var i;
+				for (i = 0; i < links.length; i++) {
+					if (links[i] != "") {
+						var source = links[i].split("/")[2];
+						
+						if (source && source.split(".")[0] != "static1") {
+							alert(`Link ${i} not source path`);
+							// TODO: how to handle this...
+						}
+						else {
+							var type = links[i].split("."); type = type[type.length-1];
+							var img = GenImg(links[i]);
+							
+							div.appendChild(img);
+						}
+					}
+				}
+			}
+		}
+		
+		
 	</script>
 <head>
 <body>
-	<img src="https://static1.e621.net/data/89/78/897890e042db78ba9ab5e32458fe2dbc.gif"></img>
+	<input id="my_src" type="file"></input>
+	<input type="button" onclick="Read_my_src()" value="讀取"></input>
+	<div id="img-div">
+		<!--img src="https://static1.e621.net/data/89/78/897890e042db78ba9ab5e32458fe2dbc.gif" class="my-gif"></img-->
+	</div>
 </body>
+</html>
