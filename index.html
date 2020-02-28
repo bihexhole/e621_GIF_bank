@@ -1,3 +1,36 @@
+<head>
+	<script type="text/javascript">
+		var user_name = "bigblack1999";
+		var links = ["https://static1.e621.net/data/89/78/897890e042db78ba9ab5e32458fe2dbc.gif"];
+		var i;
+		
+		function My_request(url, action) {
+			if (action != "GET" && action != "POST") {
+				alert("action != GET / POST!");
+				return null;
+			}
+			
+			var Http = new XMLHttpRequest();
+			Http.open(action, url);
+			Http.onreadystatechange = (e) => {
+				;
+			}
+			Http.setRequestHeader("Access-Control-Allow-Origin", "*");
+			Http.setRequestHeader("Origin", "https://e621.net");
+			Http.send();
+			return Http;
+		}
+		
+
+		
+		for (i = 0; i < links.length; i++) {
+			var img = document.createElement("img");
+			//alert(links[i]);
+		}
+		
+		My_request("https://e621.net/user/index.json?name=bigblack1999", "GET");
+	</script>
+<head>
 <body>
-  <p>Hello</p>
+	<img src="https://static1.e621.net/data/89/78/897890e042db78ba9ab5e32458fe2dbc.gif"></img>
 </body>
